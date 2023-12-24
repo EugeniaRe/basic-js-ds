@@ -1,56 +1,113 @@
-const { NotImplementedError, ListNode } = require('../basic-js-ds/extensions/index.js');
+//const { NotImplementedError } = require('../extensions/index.js');
 
-class Queue {
-    constructor() {
-        this.head = null;
-        this.size = 0;
+//const { Node } = require('../extensions/list-tree.js');
+
+/**
+* Implement simple binary search tree according to task description
+* using Node from extensions
+*/
+
+class Node {
+  constructor(data) {
+    this.data = data;
+    this.left = null;
+    this.right = null;
+  }
+}
+
+class BinarySearchTree {
+
+  constructor() {
+    this.root = null;
+  }
+
+  root() {
+
+  }
+
+  add(data) {
+    const newNode = new Node(data);
+    if (!this.root) {
+      this.root = newNode;
+    } else {
+      this.addNewNode(this.root, newNode);
+    }
+  }
+
+  addNewNode(root, newNode) {
+    if (newNode.data < root.data) {
+      if (!root.left) {
+        root.left = newNode;
+      } else {
+        this.addNewNode(root.left, newNode);
+      }
+    } else {
+      if (!root.right) {
+        root.right = newNode;
+      } else {
+        this.addNewNode(root.right, newNode);
+      }
     }
 
-    enqueue(value) {
-        const listNode = new ListNode(value);
-        if (this.size === 0) {
-            this.head = listNode;
+  }
+
+  has(data) {
+    if (!this.root) {
+      return false;
+    } else {
+      return this.hasData(this.root, data);
+    }
+  }
+
+  hasData(root, data) {
+    if (!root) {
+      return false;
+    } else {
+      if (root.data === data) {
+        return true;
+      } else {
+        if (root.data < data) {
+          return this.hasData(root.right, data);
         } else {
-            let prev = this.head;
-            while (prev.next) {
-                prev = prev.next;
-            }
-
-        prev.next = listNode;
+          return this.hasData(root.left, data);
         }
-        this.size++;
-        return value;
+      }
+    }
+  }
+    find(/* data */) {
+      throw new NotImplementedError('Not implemented');
+      // remove line with error and write your code here
     }
 
-    dequeue() {
-         let removed = this.head;
-         this.head = this.head.next;
-         this.size--;
-         return removed;
+    remove(/* data */) {
+      throw new NotImplementedError('Not implemented');
+      // remove line with error and write your code here
     }
 
-    getUnderlyingList() {
-      let prev = this.head;
-          while (prev.next) {
-              return prev;
-              prev = prev.next;
+    min() {
+      throw new NotImplementedError('Not implemented');
+      // remove line with error and write your code here
+    }
 
-          }
-
+    max() {
+      throw new NotImplementedError('Not implemented');
+      // remove line with error and write your code here
+    }
   }
-  }
 
+module.exports = {
+  BinarySearchTree
+};
 
-const list = new Queue();
+const tree = new BinarySearchTree();
 
-list.enqueue(5);
-console.log(list);
+tree.add(1);
 
-// lista.enqueue('c');
-// lista.enqueue('a');
-// lista.enqueue('s');
-// lista.enqueue('d');
+tree.add(2);
 
-// lista.dequeue();
+tree.add(3);
 
-// console.log(lista);
+tree.add(4);
+
+tree.add(5);
+console.log(tree.has(9));
