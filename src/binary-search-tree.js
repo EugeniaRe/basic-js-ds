@@ -66,7 +66,7 @@ class BinarySearchTree {
     }
   }
   find(data) {
-    return(this.findData(this.treeRoot, data))
+    return (this.findData(this.treeRoot, data))
 
   }
 
@@ -86,11 +86,41 @@ class BinarySearchTree {
     }
   }
 
-  remove(/* data */) {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+  remove(data) {
+    return this.removeNode(this.treeRoot, data)
   }
+  removeNode(treeRoot, data) {
+    if (!treeRoot) {
+      return null;
+    } else {
+      if (data < treeRoot.data) {
+        treeRoot.left = this.removeNode(treeRoot.left, data);
+        return treeRoot;
+      } else if (data > treeRoot.data) {
+        treeRoot.right = this.removeNode(treeRoot.right, data);
+        return treeRoot;
+      } else {
+        if (!treeRoot.left && !treeRoot.right) {
+          return null;
+        }
+        if (!treeRoot.right) {
+          return treeRoot.left;
+        } else if (!treeRoot.left) {
+          return treeRoot.right;
+        }
 
+          let tempNode = treeRoot.right;
+          while (tempNode.left) {
+            tempNode = tempNode.left;
+          }
+          treeRoot.data = tempNode.data;
+          treeRoot.right = this.removeNode(treeRoot.right, tempNode.data);
+          return treeRoot;
+      }
+
+
+    }
+  }
   min() {
     let tempNode = this.treeRoot;
     while (tempNode.left) {
